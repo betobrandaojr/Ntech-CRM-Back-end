@@ -4,7 +4,11 @@ const jwt = require("jsonwebtoken");
 const senhaJWT = require("../senhaJWT");
 
 const cadastrarUsuario = async (req, res) => {
-  const { nome, email, senha } = req.body;
+  const { nome, email, senha, empresa_id, cargo_id, status } = req.body;
+
+
+console.log(req.body);
+
 
   try {
 
@@ -19,11 +23,11 @@ const cadastrarUsuario = async (req, res) => {
     const senhaCriptografada = await bcrypt.hash(senha, 10);
 
     const query = `
-    insert into usuarios(nome,email,senha)
-    values($1,$2,$3) returning *
+    insert into usuarios(nome, email, senha, empresa_id, cargo_id, status)
+    values($1,$2,$3,$4,$5,$6) returning *
 `;
 
-    const { rows } = await pool.query(query, [nome, email, senhaCriptografada]);
+    const { rows } = await pool.query(query, [nome, email, senhaCriptografada, empresa_id, cargo_id, status]);
 
     const { senha: _, ...usuario } = rows[0];
     return res.status(201).json(usuario);
