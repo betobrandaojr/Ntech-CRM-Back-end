@@ -1,0 +1,19 @@
+name: Auto Update Staging
+
+on:
+  push:
+    branches: [ Develop ]
+
+jobs:
+  update-staging:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        ref: Develop
+    - name: Merge changes to Staging
+      run: |
+        git fetch
+        git checkout Staging
+        git merge Develop
+        git push origin Staging
