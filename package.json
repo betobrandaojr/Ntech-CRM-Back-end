@@ -1,36 +1,33 @@
 {
-  "name": "projetos_empresa",
+  "name": "ntech-crm-back-end",
   "version": "1.0.0",
   "description": "Inicio 12/01/24",
- 
+  "main": "./src/index.js",
   "dev": "nodemon ./src/index.js",
   "scripts": {
-    "start": "./src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/betobrandaojr/Code-Lab-CRM-Back-end.git"
+    "url": "git+https://github.com/betobrandaojr/Ntech-CRM-Back-end.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/betobrandaojr/Code-Lab-CRM-Back-end/issues"
+    "url": "https://github.com/betobrandaojr/Ntech-CRM-Back-end/issues"
   },
-  "homepage": "https://github.com/betobrandaojr/Code-Lab-CRM-Back-end#readme",
+  "homepage": "https://github.com/betobrandaojr/Ntech-CRM-Back-end#readme",
   "dependencies": {
-    "aws-sdk": "^2.1535.0",
+    "aws-sdk": "^2.1562.0",
     "bcrypt": "^5.1.1",
-    "dotenv": "^16.3.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
     "express": "^4.18.2",
-    "joi": "^17.11.0",
+    "joi": "^17.12.1",
     "jsonwebtoken": "^9.0.2",
     "multer": "^1.4.5-lts.1",
-    "nodemailer": "^6.9.8",
+    "nodemailer": "^6.9.9",
     "pg": "^8.11.3"
-  },
-  "devDependencies": {
-    "nodemon": "^3.0.2"
   }
 }
