@@ -6,12 +6,7 @@ const senhaJWT = require("../senhaJWT");
 const cadastrarUsuario = async (req, res) => {
   const { nome, email, senha, empresa_id, cargo_id, status } = req.body;
 
-
-console.log(req.body);
-
-
   try {
-
     const emailExiste = await pool.query(
       "select * from usuarios where email = $1",
       [email]
@@ -112,9 +107,22 @@ const detalharPerfilUsuario = async (req, res) => {
   return res.status(200).json(user);
 };
 
+const listarUsuarios = async (req, res) => {
+  const users = 'usuarios';
+  try {
+    const usuarios = await pool.query(`SELECT nome FROM ${users}`);
+    return res.status(200).json(usuarios.rows);
+  } catch(error) {
+    return res.status(400).json({ erro: error.message });
+  }
+};
+
+
+
 module.exports = {
   cadastrarUsuario,
   login,
   detalharPerfilUsuario,
   editarPerfilUsuario,
+  listarUsuarios
 };

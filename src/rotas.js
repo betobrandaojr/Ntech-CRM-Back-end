@@ -23,10 +23,14 @@ rotas.get('/categorias', listarCategorias);
 rotas.post('/usuario',validarCorpoRequisicao(schemaUsuarios),usuario.cadastrarUsuario);
 rotas.post('/login',validarCorpoRequisicao(schemaLogin), usuario.login);
 
+rotas.get('/listarUsuarios', usuario.listarUsuarios);
+
 rotas.use(verificarLogin);
 
 rotas.get('/usuario', usuario.detalharPerfilUsuario);
 rotas.put('/usuario', validarCorpoRequisicao(schemaUsuarios),usuario.editarPerfilUsuario);
+
+
 
 //rotas.post('/produto',multer.single('arquivo'),validarCorpoRequisicao(schemaProdutos),produto.cadastrarProduto);
 //rotas.put('/produto/:id', validarCorpoRequisicao(schemaProdutos),produto.editarDadosProduto);
