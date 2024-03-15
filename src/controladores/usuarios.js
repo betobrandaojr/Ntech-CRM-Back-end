@@ -110,7 +110,7 @@ const detalharPerfilUsuario = async (req, res) => {
 const listarUsuarios = async (req, res) => {
   const users = 'usuarios';
   try {
-    const usuarios = await pool.query(`SELECT nome FROM ${users}`);
+    const usuarios = await pool.query(`SELECT * FROM ${users}`);
     return res.status(200).json(usuarios.rows);
   } catch(error) {
     return res.status(400).json({ erro: error.message });

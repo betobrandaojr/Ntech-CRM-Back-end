@@ -25,6 +25,7 @@ rotas.post('/login',validarCorpoRequisicao(schemaLogin), usuario.login);
 
 rotas.get('/listarUsuarios', usuario.listarUsuarios);
 
+// login verificado
 rotas.use(verificarLogin);
 
 rotas.get('/usuario', usuario.detalharPerfilUsuario);
