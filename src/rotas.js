@@ -25,12 +25,12 @@ rotas.post('/login',validarCorpoRequisicao(schemaLogin), usuario.login);
 
 rotas.get('/listarUsuarios', usuario.listarUsuarios);
 
-// login verificado
-rotas.use(verificarLogin);
 
 rotas.get('/usuario', usuario.detalharPerfilUsuario);
-rotas.put('/usuario', validarCorpoRequisicao(schemaUsuarios),usuario.editarPerfilUsuario);
+rotas.put('/usuario/:id', validarCorpoRequisicao(schemaUsuarios),usuario.editarPerfilUsuario);
 
+// login verificado
+rotas.use(verificarLogin);
 
 
 //rotas.post('/produto',multer.single('arquivo'),validarCorpoRequisicao(schemaProdutos),produto.cadastrarProduto);

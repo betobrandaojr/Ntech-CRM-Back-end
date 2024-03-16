@@ -22,7 +22,7 @@ const cadastrarUsuario = async (req, res) => {
     values($1,$2,$3,$4,$5,$6) returning *
 `;
 
-    const { rows } = await pool.query(query, [nome, email, senhaCriptografada, empresa_id, cargo_id, status]);
+    const { rows } = await pool.query(query, [nome, email.toLowerCase(), senhaCriptografada, empresa_id, cargo_id, status]);
 
     const { senha: _, ...usuario } = rows[0];
     return res.status(201).json(usuario);
@@ -62,13 +62,17 @@ const login = async (req, res) => {
   }
 };
 
+
+
+
 const editarPerfilUsuario = async (req, res) => {
-  const { nome, email, senha } = req.body;
+  const { nome, email, senha, empresa_id, cargo_id, status } = req.body;
+  const usuario = req.params;
 
   try {
-    const userId = req.usuario.rows[0].id;
+    const userId = usuario.id;
     const usuarioExistente = await pool.query(
-      "SELECT * FROM usuarios WHERE id = $1",
+      "SELECT * FROM usuarios WHERE usuario_id = $1",
       [userId]
     );
 
@@ -77,17 +81,17 @@ const editarPerfilUsuario = async (req, res) => {
     }
 
     const emailExistente = await pool.query(
-      "SELECT * FROM usuarios WHERE email = $1 AND id <> $2",
-      [email, userId]
+      "SELECT * FROM usuarios WHERE email = $1",
+      [email.toLowerCase()]
     );
 
-    if (emailExistente.rowCount > 0) {
+    if (emailExistente.rowCount < 1) {
       return res.status(400).json({ erro: "Email não encontrado!" });
     }
 
     const usuarioAtualizado = await pool.query(
-      "UPDATE usuarios SET nome = $1, email = $2 WHERE id = $3 RETURNING id, nome, email",
-      [nome, email, userId]
+      "UPDATE usuarios SET nome = $1, email = $2, empresa_id = $3, cargo_id = $4, status = $5 WHERE usuario_id = $6 RETURNING usuario_id, nome, email, empresa_id, cargo_id, status",
+      [nome, email.toLowerCase(),empresa_id,cargo_id, status ,userId]
     );
 
     if (usuarioAtualizado.rowCount > 0) {
@@ -96,16 +100,22 @@ const editarPerfilUsuario = async (req, res) => {
     } else {
       return res.status(500).json({ erro: "Erro interno do servidor" });
     }
+
   } catch (error) {
     return res.status(400).json({ erro: error.message });
   }
 };
+
+
 
 const detalharPerfilUsuario = async (req, res) => {
   const user = req.usuario.rows[0];
   delete user.senha;
   return res.status(200).json(user);
 };
+
+
+
 
 const listarUsuarios = async (req, res) => {
   const users = 'usuarios';
