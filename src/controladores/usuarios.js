@@ -129,10 +129,60 @@ const listarUsuarios = async (req, res) => {
 
 
 
+const excluirUsuario = async (req, res) => {
+  const { email } = req.body;
+  const {id} = req.params;
+
+  try {
+    const usuarioExistente = await pool.query(
+      "SELECT * FROM usuarios WHERE usuario_id = $1",
+      [id]
+    );
+
+
+    if (usuarioExistente.rowCount < 1) {
+      return res.status(400).json({ erro: "Usuario não encontrado!" });
+    }
+
+    const emailExistente = await pool.query(
+      "SELECT * FROM usuarios WHERE email = $1",
+      [email.toLowerCase()]
+    );
+
+
+    if (emailExistente.rowCount < 1) {
+      return res.status(400).json({ erro: "Email não encontrado!" });
+    }
+
+    const { nome, empresa_id, cargo_id } = usuarioExistente.rows[0];
+    const status = 0;
+
+    const usuarioAtualizado = await pool.query(
+      "UPDATE usuarios SET nome = $1, email = $2, empresa_id = $3, cargo_id = $4, status = $5 WHERE usuario_id = $6 RETURNING usuario_id, nome, email, empresa_id, cargo_id, status",
+      [nome, email.toLowerCase(),empresa_id,cargo_id, status ,id]
+    );
+
+    if (usuarioAtualizado.rowCount > 0) {
+      const usuarioEditado = usuarioAtualizado.rows[0];
+      return res.json(usuarioEditado);
+    } else {
+      return res.status(500).json({ erro: "Erro interno do servidor" });
+    }
+
+  } catch (error) {
+    return res.status(400).json({ erro: error.message });
+  }
+};
+
+
+
+
+
 module.exports = {
   cadastrarUsuario,
   login,
   detalharPerfilUsuario,
   editarPerfilUsuario,
-  listarUsuarios
+  listarUsuarios,
+  excluirUsuario
 };

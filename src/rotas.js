@@ -28,6 +28,8 @@ rotas.get('/listarUsuarios', usuario.listarUsuarios);
 
 rotas.get('/usuario', usuario.detalharPerfilUsuario);
 rotas.put('/usuario/:id', validarCorpoRequisicao(schemaUsuarios),usuario.editarPerfilUsuario);
+rotas.delete('/usuario/:id',usuario.excluirUsuario);
+
 
 // login verificado
 rotas.use(verificarLogin);
