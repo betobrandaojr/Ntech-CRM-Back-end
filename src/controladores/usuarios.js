@@ -154,8 +154,14 @@ const excluirUsuario = async (req, res) => {
       return res.status(400).json({ erro: "Email não encontrado!" });
     }
 
-    const { nome, empresa_id, cargo_id } = usuarioExistente.rows[0];
-    const status = 0;
+
+    let { nome, empresa_id, cargo_id, status } = usuarioExistente.rows[0];
+    
+    if(status == 0){
+     return res.status(200).json({ erro: "Usuario já consta como inativo!" });
+    }else{
+      status = 0;
+    }
 
     const usuarioAtualizado = await pool.query(
       "UPDATE usuarios SET nome = $1, email = $2, empresa_id = $3, cargo_id = $4, status = $5 WHERE usuario_id = $6 RETURNING usuario_id, nome, email, empresa_id, cargo_id, status",
