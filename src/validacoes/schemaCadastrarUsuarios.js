@@ -1,6 +1,6 @@
 const joi = require('joi');
 
-const schemaUsuarios = joi.object({
+const schemaCadastrarUsuarios = joi.object({
     nome: joi.string().min(3).required().messages({
       "any.required": "O campo nome é obrigatório",
       "string.min": "Campo nome deve ter no mínimo 3 letras",
@@ -37,4 +37,4 @@ const schemaUsuarios = joi.object({
 
   });
 
-module.exports = schemaUsuarios
+module.exports = schemaCadastrarUsuarios;

@@ -12,7 +12,9 @@ const pedidos = require('./controladores/pedidos');
 
 const validarCorpoRequisicao = require('./intermediarios/validarCorpoRequisicao');
 const schemaClientes = require('./validacoes/schemaClientes');
-const schemaUsuarios = require('./validacoes/schemaUsuarios');
+const schemaCadastrarUsuarios = require('./validacoes/schemaCadastrarUsuarios');
+const schemaEditarUsuarios = require('./validacoes/schemaEditarUsuarios');
+
 const schemaProdutos = require('./validacoes/schemaProdutos');
 const schemaLogin = require('./validacoes/schemaLogin');
 const schemaPedidos = require('./validacoes/schemaPedidos');
@@ -20,14 +22,14 @@ const schemaPedidos = require('./validacoes/schemaPedidos');
 const rotas = express();
 
 rotas.get('/categorias', listarCategorias);
-rotas.post('/usuario',validarCorpoRequisicao(schemaUsuarios),usuario.cadastrarUsuario);
+rotas.post('/usuario',validarCorpoRequisicao(schemaCadastrarUsuarios),usuario.cadastrarUsuario);
 rotas.post('/login',validarCorpoRequisicao(schemaLogin), usuario.login);
 
 rotas.get('/listarUsuarios', usuario.listarUsuarios);
 
 
 rotas.get('/usuario', usuario.detalharPerfilUsuario);
-rotas.put('/usuario/:id', validarCorpoRequisicao(schemaUsuarios),usuario.editarPerfilUsuario);
+rotas.put('/usuario/:id', validarCorpoRequisicao(schemaEditarUsuarios),usuario.editarPerfilUsuario);
 rotas.delete('/usuario/:id',usuario.excluirUsuario);
 
 

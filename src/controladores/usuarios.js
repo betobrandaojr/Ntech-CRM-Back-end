@@ -68,7 +68,7 @@ const login = async (req, res) => {
 
 
 const editarPerfilUsuario = async (req, res) => {
-  const { nome, email, senha, empresa_id, cargo_id, status } = req.body;
+  const { nome, email, empresa_id, cargo_id, status } = req.body;
   const usuario = req.params;
 
   try {
