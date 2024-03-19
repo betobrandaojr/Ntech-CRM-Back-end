@@ -4,7 +4,9 @@ const jwt = require("jsonwebtoken");
 const senhaJWT = require("../senhaJWT");
 
 const cadastrarUsuario = async (req, res) => {
-  const { nome, email, senha, empresa_id, cargo_id, status } = req.body;
+  const { nome, email, senha, empresa_id, cargo_id } = req.body;
+
+const status = 1;
 
   try {
     const emailExiste = await pool.query(
@@ -120,8 +122,9 @@ const detalharPerfilUsuario = async (req, res) => {
 const listarUsuarios = async (req, res) => {
   const users = 'usuarios';
   try {
-    const usuarios = await pool.query(`SELECT * FROM ${users}`);
-    return res.status(200).json(usuarios.rows);
+    const usuarios = await pool.query(`SELECT * FROM ${users} WHERE status = 1`);
+    const usuariosSemSenha = usuarios.rows.map(({ senha, ...usuario }) => usuario);
+    return res.status(200).json(usuariosSemSenha);
   } catch(error) {
     return res.status(400).json({ erro: error.message });
   }
