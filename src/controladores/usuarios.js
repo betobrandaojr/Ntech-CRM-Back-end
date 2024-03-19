@@ -147,6 +147,10 @@ const excluirUsuario = async (req, res) => {
       return res.status(400).json({ erro: "Usuario não encontrado!" });
     }
 
+if(!email){
+  return res.status(400).json({ erro: "O email não encontrado!" });
+}
+
     const emailExistente = await pool.query(
       "SELECT * FROM usuarios WHERE email = $1",
       [email.toLowerCase()]
