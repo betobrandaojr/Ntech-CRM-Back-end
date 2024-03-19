@@ -133,7 +133,7 @@ const listarUsuarios = async (req, res) => {
 
 
 const excluirUsuario = async (req, res) => {
-  const { email } = req.body;
+  //const { email } = req.body;
   const {id} = req.params;
 
   try {
@@ -147,22 +147,22 @@ const excluirUsuario = async (req, res) => {
       return res.status(400).json({ erro: "Usuario não encontrado!" });
     }
 
-if(!email){
-  return res.status(400).json({ erro: "O email não encontrado!" });
-}
+// if(!email){
+//   return res.status(400).json({ erro: "O email não encontrado!" });
+// }
 
-    const emailExistente = await pool.query(
-      "SELECT * FROM usuarios WHERE email = $1",
-      [email.toLowerCase()]
-    );
-
-
-    if (emailExistente.rowCount < 1) {
-      return res.status(400).json({ erro: "Email não encontrado!" });
-    }
+//     const emailExistente = await pool.query(
+//       "SELECT * FROM usuarios WHERE email = $1",
+//       [email.toLowerCase()]
+//     );
 
 
-    let { nome, empresa_id, cargo_id, status } = usuarioExistente.rows[0];
+//     if (emailExistente.rowCount < 1) {
+//       return res.status(400).json({ erro: "Email não encontrado!" });
+//     }
+
+
+    let { nome, email, empresa_id, cargo_id, status } = usuarioExistente.rows[0];
     
     if(status == 0){
      return res.status(200).json({ erro: "Usuario já consta como inativo!" });
